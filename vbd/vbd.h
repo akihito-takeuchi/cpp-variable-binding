@@ -18,7 +18,7 @@ namespace vbd {
 
 class Exception : public std::exception {
  public:
-  Exception() noexcept;
+  Exception() noexcept {};
   Exception(const std::string& msg) noexcept : msg_(msg) {}
   virtual ~Exception() {}
   virtual const char* what() const noexcept { return msg_.c_str(); }

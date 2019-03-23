@@ -7,3 +7,4 @@ endmacro()
 
 vbdAddTest("SimpleBind" "simplebind_test.cc")
 vbdAddTest("CallbackTest" "callback_test.cc")
+vbdAddTest("UpdateStopTest" "updatestop_test.cc")

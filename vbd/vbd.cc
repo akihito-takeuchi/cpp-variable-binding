@@ -147,6 +147,7 @@ class VbdEngine {
   std::unordered_map<unsigned int,
                      std::unordered_set<VariableBase*>> variables_by_group_;
   std::vector<std::pair<VariableBase*, VoidFuncType>> assign_info_list_;
+  std::unordered_map<VariableBase*, boost::any> initial_values_;
   unsigned int group_id_next_ = 0;
   bool in_transaction_ = false;
   bool executing_ = false;
@@ -217,17 +218,22 @@ void VbdEngine::Exec() {
   BuildPropergationFlow_(start_node);
   try {
     Propergate_(start_node);
+    initial_values_.clear();
+    executing_ = false;
   } catch (const Exception& e) {
     Rollback_();
     assign_info_list_.clear();
+    initial_values_.clear();
     executing_ = false;
     throw;
   }
-  executing_ = false;
 }
 
 void VbdEngine::Assign_() {
   for (auto& info : assign_info_list_) {
+    auto v = info.first;
+    if (initial_values_.find(v) == initial_values_.end())
+      initial_values_[v] = v->value_;
     info.second();
     info.first->ExecCallback();
   }
@@ -272,6 +278,8 @@ void VbdEngine::Propergate_(PropergateTreeNode& tree) {
 }
 
 void VbdEngine::Rollback_() {
+  for (auto v : initial_values_)
+    v.first->value_ = v.second;
 }
 
 void VbdEngine::UpdateAccess(VariableBase* v) const {
