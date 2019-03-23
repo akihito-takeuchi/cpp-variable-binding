@@ -28,9 +28,9 @@ class VariableBase {
   T operator=(const T& new_value);
   template<typename T>
   T Get() const;
-  virtual void Legalize() = 0;
   void SetName(const std::string& name) { name_ = name; }
   std::string Name() const { return name_; }
+  virtual void ExecCallback() = 0;
  protected:
   VariableBase();
   VariableBase(const std::string& name);
@@ -97,9 +97,12 @@ class Variable : public VariableBase {
   T Value() const {
     return VariableBase::Get<T>();
   }
-  void Legalize() {
-    if (legalizer_)
-      value_ = legalizer_(Value());
+  void SetCallback(const CallbackFuncType<T>& cb) {
+    callback_ = cb;
+  }
+  void ExecCallback() {
+    if (callback_)
+      value_ = callback_(Value());
   }
   template<typename VT>
   void Listen(const VT& broadcaster,
@@ -114,7 +117,7 @@ class Variable : public VariableBase {
     UpdateGroupID(this, broadcaster.get());
   }
  private:
-  LegalizerFuncType<T> legalizer_;
+  CallbackFuncType<T> callback_;
 };
 
 void InitVariable(const std::shared_ptr<VariableBase>& v);

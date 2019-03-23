@@ -229,7 +229,7 @@ void VbdEngine::Exec() {
 void VbdEngine::Assign_() {
   for (auto& info : assign_info_list_) {
     info.second();
-    info.first->Legalize();
+    info.first->ExecCallback();
   }
   assign_info_list_.clear();
 }

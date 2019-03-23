@@ -35,7 +35,7 @@ using BindFuncType2 = std::function<
   S (const S& self, const T1& broadcaster1, const T2& broadcaster2)>;
 
 template<typename T>
-using LegalizerFuncType = std::function<T (const T& current)>;
+using CallbackFuncType = std::function<T (const T& current)>;
 
 using TransactionFuncType = std::function<void ()>;
 

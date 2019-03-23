@@ -6,3 +6,4 @@ macro(vbdAddTest test_name src_path)
 endmacro()
 
 vbdAddTest("SimpleBind" "simplebind_test.cc")
+vbdAddTest("CallbackTest" "callback_test.cc")
