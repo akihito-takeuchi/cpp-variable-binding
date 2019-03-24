@@ -8,3 +8,11 @@ endmacro()
 vbdAddTest("SimpleBind" "simplebind_test.cc")
 vbdAddTest("CallbackTest" "callback_test.cc")
 vbdAddTest("UpdateStopTest" "updatestop_test.cc")
+
+set(QTDIR $ENV{QTDIR})
+set(CMAKE_PREFIX_PATH ${QTDIR})
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Widgets REQUIRED)
+
+vbdAddTest("BindQt" "bindqt_test.cc")
+qt5_use_modules(BindQt Widgets)
