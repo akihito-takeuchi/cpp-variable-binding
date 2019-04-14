@@ -13,7 +13,7 @@ TEST(BindQtTest, SimpleWidget) {
   QApplication app(argc, argv);
   auto a = vbd::MakeVariable<QString>("Test string");
   QLineEdit lbl(a->Value());
-  vbd::qt::BindQObject(a, &lbl, "text", &QLineEdit::textChanged);
+  vbd::qt::BindObjectProperty(a, &lbl, "text", &QLineEdit::textChanged);
   ASSERT_EQ(a->Value(), QString("Test string"));
   ASSERT_EQ(lbl.text(), QString("Test string"));
   *a = "Updated";

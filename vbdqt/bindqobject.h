@@ -11,9 +11,9 @@ namespace vbd {
 class qt {
  public:
   template<typename T, typename QObjType, typename FuncType>
-  static void BindQObject(const VPtr<T>& v, QObjType* obj,
-                          const char* property_name,
-                          FuncType signal) {
+  static void BindObjectProperty(const VPtr<T>& v, QObjType* obj,
+                                 const char* property_name,
+                                 FuncType signal) {
     v->SetCallback([obj, property_name](const T& value) {
         obj->setProperty(property_name, value);
         return value;

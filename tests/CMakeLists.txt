@@ -11,6 +11,8 @@ vbdAddTest("UpdateStopTest" "updatestop_test.cc")
 
 set(QTDIR $ENV{QTDIR})
 set(CMAKE_PREFIX_PATH ${QTDIR})
+set(CMAKE_AUTOMOC on)
+set(CMAKE_INCLUDE_CURRENT_DIR on)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
